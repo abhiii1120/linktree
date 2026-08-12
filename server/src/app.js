@@ -1,12 +1,14 @@
-import express from 'express';
-import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
+import express from "express";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
-let app = express();
+export default function createApp() {
+  let app = express();
+  
 
-app.use(express.json());
-app.use(morgan('dev'));
-app.use(cookieParser());
+  app.use(express.json());
+  app.use(morgan("dev"));
+  app.use(cookieParser());
 
-
-export default app;
+  return app;
+}
