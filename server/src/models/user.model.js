@@ -39,3 +39,5 @@ userSchema.methods.comparePassword = async function (enteredPassword){
 }
 
 const userModel = model("users", userSchema);
+
+export default userModel;
