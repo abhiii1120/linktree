@@ -3,6 +3,8 @@ import AppError from "../../../shared/errors/app.error.js";
 import jwt from 'jsonwebtoken';
 import { StatusCodes } from "http-status-codes";
 import env from "../../../config/env.js";
+import UnAuthorize from "../../../shared/errors/unAuthorize.js";
+import notFound from "../../../shared/errors/notFound.js";
 
 
 export default class AuthService {
