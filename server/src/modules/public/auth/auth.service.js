@@ -1,11 +1,11 @@
 import UserRepo from "../../../repository/auth.repository.js";
 import AppError from "../../../shared/errors/app.error.js";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import env from "../../../config/env.js";
 import UnAuthorize from "../../../shared/errors/unAuthorize.js";
 import notFound from "../../../shared/errors/notFound.js";
-
+import bcrypt from "bcrypt";
 
 export default class AuthService {
   constructor() {
@@ -13,6 +13,7 @@ export default class AuthService {
   }
 
   signTokens(data) {
+    console.log("SIGNING WITH:", env.ACCESS_TOKEN_SECRET);
     let refreshToken = jwt.sign(data, env.REFRESH_TOKEN_SECRET, {
       expiresIn: "30D",
     });
@@ -32,14 +33,6 @@ export default class AuthService {
     };
   }
 
-    async getMe(accessToken) {
-    if (!accessToken) throw new UnAuthorize("Access token not found");
-
-    const user = jwt.verify(accessToken, env.ACCESS_TOKEN_SECRET);
-
-    return { user };
-  }
-
   async registerUser(payload) {
     let user = {
       ...payload,
@@ -51,6 +44,9 @@ export default class AuthService {
     if (existingUser) {
       throw new AppError("user already exists", StatusCodes.CONFLICT);
     }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
 
     const newUser = await this.UserRepo.create(user);
 
@@ -73,12 +69,21 @@ export default class AuthService {
 
     let isMatch = await user.comparePassword(payload.password);
 
-    if (isMatch) throw new UnAuthorize("Password doesn't match");
+    if (!isMatch) throw new UnAuthorize("Password doesn't match");
 
     const tokenPayload = this.tokenPayload(user);
     const tokens = this.signTokens(tokenPayload);
 
     return { ...tokens, user: tokenPayload };
+  }
+
+  async getMe(accessToken) {
+    console.log("VERIFYING WITH:", env.ACCESS_TOKEN_SECRET);
+    if (!accessToken) throw new UnAuthorize("Access token not found");
+
+    const user = jwt.verify(accessToken, env.ACCESS_TOKEN_SECRET);
+    console.log(user);
+    return { user };
   }
 
   async refreshAccessToken(refreshToken) {
@@ -90,6 +95,4 @@ export default class AuthService {
 
     return { accessToken };
   }
-
-
 }
