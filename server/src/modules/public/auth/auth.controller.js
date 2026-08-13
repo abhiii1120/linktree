@@ -15,7 +15,7 @@ export default class AuthController {
 
     setAuthCookies(res, accessToken, refreshToken);
 
-    return buildSuccessResponse(res, "User registerde successfully", user);
+    return buildSuccessResponse(res, "User registered successfully", user);
   }
 
   async loginController(req, res) {
