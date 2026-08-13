@@ -1,14 +1,12 @@
-import express from 'express';
-import { asyncHandler } from '../../../middlewares/asyncHandler.js';
-import { loginSchema, registerSchema } from './auth.validator.js';
-import { validateRequest } from '../../../middlewares/validateRequest.js';
-import AuthController from './auth.controller.js';
+import express from "express";
+import { asyncHandler } from "../../../middlewares/asyncHandler.js";
+import { loginSchema, registerSchema } from "./auth.validator.js";
+import { validateRequest } from "../../../middlewares/validateRequest.js";
+import AuthController from "./auth.controller.js";
 
 let router = express.Router();
 
 let authController = new AuthController();
-
-
 
 router.post(
   "/register",
@@ -23,10 +21,10 @@ router.post(
 );
 
 router.get("/me", asyncHandler(authController.getMe.bind(authController)));
-// router.get(
-//   "/refreshToken",
-//   asyncHandler(authController.refreshAccessToken.bind(authController)),
-// );
 
+router.get(
+  "/refreshToken",
+  asyncHandler(authController.refreshAccessToken.bind(authController)),
+);
 
 export default router;
