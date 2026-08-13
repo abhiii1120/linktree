@@ -1,4 +1,4 @@
-import { app_config } from "../../constants/app.constants"
+import { app_config } from "../../constants/app.constants.js"
 
 const config = app_config;
 export const setAuthCookies = (res,refreshToken,accessToken) => {

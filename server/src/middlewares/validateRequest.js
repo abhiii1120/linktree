@@ -1,5 +1,5 @@
 import { z } from "zod";
-import BadRequest from "../shared/error/BadRequest.js";
+import BadRequest from "../shared/errors/badRequest.js";
 
 export function validateRequest(schema) {
   return function validateRequestMiddleware(req, res, next) {
@@ -10,7 +10,7 @@ export function validateRequest(schema) {
     });
 
     if (!result.success) {
-      next(new BadRequest("Validation failed", z.treeifyError(result.error)));
+      next(BadRequest("Validation failed", z.treeifyError(result.error)));
       return;
     }
 

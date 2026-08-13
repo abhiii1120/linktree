@@ -9,7 +9,7 @@ import notFound from "../../../shared/errors/notFound.js";
 
 export default class AuthService {
   constructor() {
-    this.userRepo = new UserRepo();
+    this.UserRepo = new UserRepo();
   }
 
   signTokens(data) {
@@ -28,9 +28,16 @@ export default class AuthService {
     return {
       _id: String(data._id),
       email: data.email,
-      name: data.name,
-      role: data.role,
+      name: data.username,
     };
+  }
+
+    async getMe(accessToken) {
+    if (!accessToken) throw new UnAuthorize("Access token not found");
+
+    const user = jwt.verify(accessToken, env.ACCESS_TOKEN_SECRET);
+
+    return { user };
   }
 
   async registerUser(payload) {
@@ -84,11 +91,5 @@ export default class AuthService {
     return { accessToken };
   }
 
-  async getMe(accessToken) {
-    if (!accessToken) throw new UnAuthorize("Access token not found");
 
-    const user = jwt.verify(accessToken, env.ACCESS_TOKEN_SECRET);
-
-    return { user };
-  }
 }
