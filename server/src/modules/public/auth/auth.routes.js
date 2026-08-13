@@ -9,7 +9,6 @@ let router = express.Router();
 let authController = new AuthController();
 
 
-// router.get("/me", asyncHandler(authController.getMe.bind(authController)));
 
 router.post(
   "/register",
@@ -23,6 +22,7 @@ router.post(
   asyncHandler(authController.loginController.bind(authController)),
 );
 
+router.get("/me", asyncHandler(authController.getMe.bind(authController)));
 // router.get(
 //   "/refreshToken",
 //   asyncHandler(authController.refreshAccessToken.bind(authController)),

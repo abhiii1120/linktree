@@ -24,6 +24,11 @@ export default class AuthController {
 
     setAuthCookies(res, accessToken, refreshToken);
 
-    return buildSuccessResponse(res, "User login successfully",user);
+    return buildSuccessResponse(res, "User login successfully", user);
+  }
+
+  async getMe(req, res) {
+    const { user } = await this.AuthService.getMe(req.cookies.accessToken);
+    return buildSuccessResponse(res, "User data fetched successfully", user);
   }
 }
