@@ -3,16 +3,27 @@ import { buildSuccessResponse } from "../../../shared/utils/buildSuccessResponse
 import AuthService from "./auth.service.js";
 
 export default class AuthController {
-    constructor() {
-        this.AuthService = new AuthService()
-    }
+  constructor() {
+    this.AuthService = new AuthService();
+  }
 
-    async registerController(req,res) {
-        const userData = req.validated.body;
-        const {accessToken,refreshToken,user} = await this.AuthService.registerUser(userData);
+  async registerController(req, res) {
+    const userData = req.validated.body;
+    const { accessToken, refreshToken, user } =
+      await this.AuthService.registerUser(userData);
 
-        setAuthCookies(res,accessToken,refreshToken);
+    setAuthCookies(res, accessToken, refreshToken);
 
-        return buildSuccessResponse(res,"User login successfully",user);
-    }
+    return buildSuccessResponse(res, "User registerde successfully", user);
+  }
+
+  async loginController(req, res) {
+    const userData = req.validated.body;
+    const { accessToken, refreshToken, user } =
+      await this.AuthService.LoginService(userData);
+
+    setAuthCookies(res, accessToken, refreshToken);
+
+    return buildSuccessResponse(res, "User login successfully",user);
+  }
 }

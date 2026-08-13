@@ -1,6 +1,6 @@
 import express from 'express';
 import { asyncHandler } from '../../../middlewares/asyncHandler.js';
-import { registerSchema } from './auth.validator.js';
+import { loginSchema, registerSchema } from './auth.validator.js';
 import { validateRequest } from '../../../middlewares/validateRequest.js';
 import AuthController from './auth.controller.js';
 
@@ -17,11 +17,11 @@ router.post(
   asyncHandler(authController.registerController.bind(authController)),
 );
 
-// router.post(
-//   "/login",
-//   validateRequest(loginSchema),
-//   asyncHandler(authController.loginController.bind(authController)),
-// );
+router.post(
+  "/login",
+  validateRequest(loginSchema),
+  asyncHandler(authController.loginController.bind(authController)),
+);
 
 // router.get(
 //   "/refreshToken",
