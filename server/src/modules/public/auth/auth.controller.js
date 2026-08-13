@@ -1,3 +1,4 @@
+import { app_config } from "../../../constants/app.constants.js";
 import { setAuthCookies } from "../../../shared/utils/authCookies.js";
 import { buildSuccessResponse } from "../../../shared/utils/buildSuccessResponse.js";
 import AuthService from "./auth.service.js";
@@ -30,5 +31,12 @@ export default class AuthController {
   async getMe(req, res) {
     const { user } = await this.AuthService.getMe(req.cookies.accessToken);
     return buildSuccessResponse(res, "User data fetched successfully", user);
+  }
+
+  async refreshAccessToken(req,res) {
+    const {accessToken} = await this.AuthService.refreshAccessToken(req.cookies.refreshToken);
+
+    res.cookie("accessToken",accessToken,app_config.cookie.accessToken);
+    return buildSuccessResponse(res);
   }
 }
