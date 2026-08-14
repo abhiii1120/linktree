@@ -1,8 +1,8 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "./app.error.js";
 
-export default class notFound extends AppError {
+export default class InternalServerError extends AppError {
   constructor(message, details = "") {
-    super(message, StatusCodes.NOT_FOUND, details);
+    super(message, StatusCodes.INTERNAL_SERVER_ERROR, details);
   }
 }

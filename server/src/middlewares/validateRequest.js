@@ -3,6 +3,7 @@ import BadRequest from "../shared/errors/badRequest.js";
 
 export function validateRequest(schema) {
   return function validateRequestMiddleware(req, res, next) {
+    console.log("BODY:", req.body);
     const result = schema.safeParse({
       body: req.body,
       params: req.params,
@@ -10,7 +11,7 @@ export function validateRequest(schema) {
     });
 
     if (!result.success) {
-      next(BadRequest("Validation failed", z.treeifyError(result.error)));
+      next(new BadRequest("Validation failed", z.treeifyError(result.error)));
       return;
     }
 

@@ -10,12 +10,13 @@ let linkSchema = new Schema(
     title: {
       type: String,
       required: true,
+      unique:true,
     },
     url: {
       type: String,
       required: true,
     },
-    chicks: {
+    clicks: {
       type: Number,
       default: 0,
     },
@@ -25,4 +26,5 @@ let linkSchema = new Schema(
   },
 );
 
-let linkModel = model('links',linkSchema)
+let linkModel = model('links',linkSchema);
+export default linkModel;
