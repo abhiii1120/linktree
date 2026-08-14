@@ -3,7 +3,6 @@ import { getLinksByUserId } from "../../../repository/link.repository.js";
 import notFound from "../../../shared/errors/notFound.js";
 
 export const getLinksByUserIdService = async (username) => {
-    console.log(username)
   const user = await userModel.findOne({ username });
 
   if (!user) {
