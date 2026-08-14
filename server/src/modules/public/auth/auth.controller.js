@@ -3,6 +3,8 @@ import { setAuthCookies } from "../../../shared/utils/authCookies.js";
 import { buildSuccessResponse } from "../../../shared/utils/buildSuccessResponse.js";
 import AuthService from "./auth.service.js";
 
+
+//class based methods
 export default class AuthController {
   constructor() {
     this.AuthService = new AuthService();
