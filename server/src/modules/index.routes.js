@@ -6,6 +6,6 @@ let router = express.Router();
 
 router.use("/auth", authRoutes);
 router.use("/link", linkRoutes);
-router.use("/public/link",publicLinkRoutes)
+router.use("/public/links",publicLinkRoutes)
 
 export default router;
