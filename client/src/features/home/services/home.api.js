@@ -11,7 +11,7 @@ export const getLinks = async ({username}) => {
 }
 
 export const linkClick = async ({linkId}) => {
-    const res = await linkAxiosInstance.get(`/${linkId}/click`);
+    const res = await linkAxiosInstance.patch(`/${linkId}/click`);
     console.log(res.data);
     return res.data;
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getLinks } from "../services/home.api";
+import { getLinks, linkClick } from "../services/home.api";
 
 export const useHome = () => {
   const [links, setLinks] = useState([]);
@@ -20,10 +20,22 @@ export const useHome = () => {
     }
   };
 
+  const handleLinkClick = async(linkId) => {
+    console.log(linkId)
+    try {
+      let res = await linkClick({linkId});
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw error
+    }
+  }
+
   return {
     links,
     loading,
     error,
     fetchLinks,
+    handleLinkClick,
   };
 };

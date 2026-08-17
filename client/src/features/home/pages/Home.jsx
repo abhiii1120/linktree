@@ -6,7 +6,7 @@ import LinksList from '../ui/components/LinkList';
 const Home = () => {
 
     const {username} = useParams();
-    const {fetchLinks,error,links,loading} = useHome();
+    const {fetchLinks,error,links,loading,handleLinkClick} = useHome();
 
     useEffect(() => {
       fetchLinks({username})
@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
      <div className="p-6">
-      <LinksList links={links} loading={loading} />
+      <LinksList links={links} loading={loading} onLinkClick={handleLinkClick} />
     </div>
   )
 }

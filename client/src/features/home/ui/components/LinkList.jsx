@@ -44,7 +44,7 @@ const Postmark = ({ clicks }) => {
   );
 };
  
-const Postcard = ({ link, index }) => {
+const Postcard = ({ link, index , onOpen }) => {
   const [copied, setCopied] = useState(false);
   const tilt = index % 2 === 0 ? '-rotate-1' : 'rotate-1';
  
@@ -97,6 +97,11 @@ const Postcard = ({ link, index }) => {
           {copied ? 'Copied' : 'Copy'}
         </button>
         <a
+          onClick={() => {
+            onOpen(link._id)
+            console.log(link)
+          }
+          }
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
@@ -144,7 +149,7 @@ const LoadingState = () => (
   </>
 );
  
-const LinkList = ({ links = [], loading = false, onCreate }) => {
+const LinkList = ({ links = [], loading = false, onCreate , onLinkClick }) => {
   return (
     <div className="bg-[#F1F6F0] px-6 py-10 md:px-12">
       <div className="max-w-5xl mx-auto">
@@ -178,7 +183,7 @@ const LinkList = ({ links = [], loading = false, onCreate }) => {
           ) : links.length === 0 ? (
             <EmptyState onCreate={onCreate} />
           ) : (
-            links.map((link, i) => <Postcard key={link._id} link={link} index={i} />)
+            links.map((link, i) => <Postcard key={link._id} link={link} index={i} onOpen={onLinkClick} />)
           )}
         </div>
       </div>
